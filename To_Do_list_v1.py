@@ -4,6 +4,7 @@ import time
 import functions # after creating import function add f.e. to read_file() - functions/ functions.read_file()
 
 now = time.strftime('%m %b %Y, %H:%M:%S')
+print('The time is below:')
 print('Today is', now)
 
 while True:
