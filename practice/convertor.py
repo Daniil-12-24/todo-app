@@ -16,6 +16,7 @@ window = sg.Window('File Compressor', layout=[[label1, input1, chose_b1],
                                               [label2, input2, chose_b2],
                                               [compress_b, exit_button]])
 
+
 while True:
     event, values = window.read()
     print(event, values)
