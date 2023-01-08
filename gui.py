@@ -1,6 +1,11 @@
 import functions
 import PySimpleGUI as sg
 import time
+import os
+
+if not os.path.exists('todos.txt'):
+    with open('todos.txt', 'w') as file:
+        pass
 
 sg.theme('BrightColors')
 
@@ -37,9 +42,10 @@ while True:
             try:
                 todo_to_edit = values['todos'][0]
                 new_todo = values['todo']
+
                 todos = functions.read_file()
                 index = todos.index(todo_to_edit)
-                todos[index] = new_todo
+                todos[index] = new_todo + '\n'
                 functions.write_file(todos)
                 window['todos'].update(values=todos)
             except IndexError:
