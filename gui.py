@@ -4,21 +4,38 @@ import PySimpleGUI as sg
 label = sg.Text('Type in to-do')
 input_box = sg.InputText(tooltip='Enter to-do', key='todo')
 add_button = sg.Button('Add')
+list_box = sg.Listbox(values=functions.read_file(),
+                      key='todos',
+                      enable_events=True, size=[45, 10])
+edit_button = sg.Button('Edit')
 
-window = sg.Window('My To-Do App',
-                   layout=[[label], [input_box, add_button]],
-                   font=('Helvetica', 15))
-
+window = sg.Window('My To-Do app',
+                   layout=[[label], [input_box, add_button], [list_box, edit_button]],
+                   font=('Helvetica', 20))
 while True:
     event, values = window.read()
-    print(event)
-    print(values)
+    print(1, event)
+    print(2, values)
+    print(3, values['todos'])
+    print(4, values['todo'])
     match event:
         case 'Add':
             todos = functions.read_file()
             new_todo = values['todo'] + '\n'
             todos.append(new_todo)
             functions.write_file(todos)
+            window['todos'].update(values=todos)
+        case 'Edit':
+            todo_to_edit = values['todos'][0]
+            new_todo = values['todo']
+
+            todos = functions.read_file()
+            index = todos.index(todo_to_edit)
+            todos[index] = new_todo
+            functions.write_file(todos)
+            window['todos'].update(values=todos)
+        case 'todos':
+            window['todo'].update(value=values['todos'][0])
         case sg.WINDOW_CLOSED:
             break
 
